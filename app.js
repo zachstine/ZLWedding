@@ -180,7 +180,7 @@ form.addEventListener("submit", async (event) => {
   if (firebaseResult.status === "fulfilled" || sheetResult.status === "fulfilled") {
     if (firebaseResult.status === "rejected") console.warn("Firestore RSVP backup failed", firebaseResult.reason);
     if (sheetResult.status === "rejected") console.warn("Google Sheets RSVP backup failed", sheetResult.reason);
-    form.reset(); updateAttendanceFields(); setStatus("Thank you — your RSVP is on its way!", "success");
+    form.reset(); updateAttendanceFields(); setStatus("Thank you — your RSVP via Resend is on its way! CHECK YOUR SPAM!", "success");
   } else {
     console.error("Both RSVP destinations failed", firebaseResult.reason, sheetResult.reason);
     setStatus("We couldn’t save your RSVP. Please check your connection and try again.", "error");
