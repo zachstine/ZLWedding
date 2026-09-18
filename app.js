@@ -13,7 +13,7 @@ directions.href = `https://www.google.com/maps/search/?api=1&query=${encodeURICo
 const propertyLocations = [
   { id: "big-creek-lodge", name: "Big Creek Lodge", x: 19, y: 40, type: "events-lodging", details: ["Rehearsal", "Ceremony", "Reception", "9 Rooms"] },
   { id: "green-cabin", name: "Green Cabin", x: 35, y: 22, type: "lodging", details: ["Sleeps 6"] },
-  { id: "farmhouse", name: "The Farmhouse", x: 55, y: 45, type: "lodging", details: ["Sleeps 16"] },
+  { id: "farmhouse", name: "The Farmhouse", x: 55, y: 42, type: "lodging", details: ["Sleeps 16"] },
   { id: "chicken-coop", name: "The Chicken Coop", x: 57, y: 90, type: "lodging", details: ["5 Rooms"] }
 ];
 
