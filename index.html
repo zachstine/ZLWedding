@@ -26,7 +26,7 @@
       <section class="hero" aria-labelledby="hero-title">
         <p class="eyebrow">We’re getting married</p>
         <h1 id="hero-title">Zach <span>&</span> Lauren</h1>
-        <p class="hero-date">Saturday, Jusy 10, 2027 · Westfield, North Carolina</p>
+        <p class="hero-date">Saturday, July 10, 2027 · Westfield, North Carolina</p>
         <a class="button button-light" href="#rsvp">RSVP</a>
       </section>
 
@@ -72,6 +72,29 @@
             <label>Email<input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
             <label id="guest-count-field">Guests attending<select name="guestCount"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
             <label id="dietary-field">Dietary needs<textarea name="dietaryNeeds" rows="2" maxlength="500" placeholder="Optional"></textarea></label>
+          </div>
+          <div id="additional-questions" hidden>
+            <fieldset>
+              <legend>Will you be attending the Rehearsal Dinner on Friday night?</legend>
+              <div class="attendance-options">
+                <label class="choice"><input type="radio" name="rehearsalDinner" value="yes" required /><span>Yes</span></label>
+                <label class="choice"><input type="radio" name="rehearsalDinner" value="no" /><span>No</span></label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Are you staying after the Reception Dinner?</legend>
+              <div class="attendance-options">
+                <label class="choice"><input type="radio" name="stayingAfterReceptionDinner" value="yes" required /><span>Yes</span></label>
+                <label class="choice"><input type="radio" name="stayingAfterReceptionDinner" value="no" /><span>No</span></label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Are you planning on drinking Alcohol?</legend>
+              <div class="attendance-options">
+                <label class="choice"><input type="radio" name="drinkingAlcohol" value="yes" required /><span>Yes</span></label>
+                <label class="choice"><input type="radio" name="drinkingAlcohol" value="no" /><span>No</span></label>
+              </div>
+            </fieldset>
           </div>
           <label>Message for the couple<textarea name="message" rows="3" maxlength="750" placeholder="Optional"></textarea></label>
           <button class="button" type="submit">Send RSVP</button>

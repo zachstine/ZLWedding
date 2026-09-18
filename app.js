@@ -84,6 +84,7 @@ const status = document.querySelector("#form-status");
 const attendanceInputs = form.elements.attendance;
 const guestCountField = document.querySelector("#guest-count-field");
 const dietaryField = document.querySelector("#dietary-field");
+const additionalQuestions = document.querySelector("#additional-questions");
 let db = null;
 
 async function connectFirebase() {
@@ -108,10 +109,13 @@ function updateAttendanceFields() {
   const attending = form.elements.attendance.value === "attending";
   guestCountField.hidden = !attending;
   dietaryField.hidden = !attending;
+  additionalQuestions.hidden = !attending;
   form.elements.guestCount.disabled = !attending;
   form.elements.dietaryNeeds.disabled = !attending;
+  additionalQuestions.querySelectorAll("input").forEach(input => input.disabled = !attending);
 }
 attendanceInputs.forEach(input => input.addEventListener("change", updateAttendanceFields));
+updateAttendanceFields();
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -122,6 +126,9 @@ form.addEventListener("submit", async (event) => {
     attendance: data.get("attendance"),
     guestCount: data.get("attendance") === "attending" ? Number(data.get("guestCount")) : 0,
     dietaryNeeds: data.get("attendance") === "attending" ? data.get("dietaryNeeds").trim() : "",
+    rehearsalDinner: data.get("attendance") === "attending" ? data.get("rehearsalDinner") : null,
+    stayingAfterReceptionDinner: data.get("attendance") === "attending" ? data.get("stayingAfterReceptionDinner") : null,
+    drinkingAlcohol: data.get("attendance") === "attending" ? data.get("drinkingAlcohol") : null,
     message: data.get("message").trim()
   };
   const submit = form.querySelector("button[type=submit]");

@@ -83,8 +83,7 @@ nav a {
   color: white;
   background:
     linear-gradient(rgba(47, 41, 40, 0.42), rgba(47, 41, 40, 0.42)),
-    url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=85")
-      center / cover;
+    url("assets/RingPhoto.jpeg") center 62% / cover;
 }
 
 .eyebrow {
