@@ -1,4 +1,5 @@
 import { firebaseConfig } from "./firebase-config.js";
+import { sheetWebAppUrl } from "./sheet-config.js";
 
 const venue = {
   name: "The Big Creek Lodge",
@@ -89,12 +90,12 @@ let db = null;
 
 async function connectFirebase() {
   if (!firebaseConfig.projectId || !firebaseConfig.apiKey) return;
-  const [{ initializeApp }, { getFirestore, collection, addDoc, serverTimestamp }] = await Promise.all([
+  const [{ initializeApp }, { getFirestore, collection, doc, setDoc, serverTimestamp }] = await Promise.all([
     import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"),
     import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js")
   ]);
   const app = initializeApp(firebaseConfig);
-  db = { firestore: getFirestore(app), collection, addDoc, serverTimestamp };
+  db = { firestore: getFirestore(app), collection, doc, setDoc, serverTimestamp };
   import("https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js")
     .then(async ({ getAnalytics, isSupported }) => {
       if (await isSupported()) getAnalytics(app);
@@ -105,6 +106,45 @@ async function connectFirebase() {
 connectFirebase().catch(() => setStatus("The RSVP service is temporarily unavailable. Please try again shortly.", "error"));
 
 function setStatus(message, type = "") { status.textContent = message; status.className = `form-status ${type}`; }
+
+async function saveToSheet(rsvp, id) {
+  if (!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(sheetWebAppUrl)) {
+    throw new Error("Google Sheets web app has not been configured");
+  }
+  await fetch(sheetWebAppUrl, {
+    method: "POST",
+    mode: "no-cors",
+    body: new URLSearchParams({ payload: JSON.stringify({ ...rsvp, id, submittedAt: new Date().toISOString() }) })
+  });
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    const callback = `zlSheetReply_${id.replaceAll("-", "")}`;
+    let finished = false;
+    const finish = (error) => {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timer);
+      delete window[callback];
+      script.remove();
+      if (error) reject(error); else resolve();
+    };
+    window[callback] = (result) => {
+      finish(result?.id === id && result.ok ? null : new Error("Google Sheets did not accept the RSVP"));
+    };
+    const timer = setTimeout(() => finish(new Error("Google Sheets did not confirm the RSVP")), 15000);
+    script.onerror = () => finish(new Error("Google Sheets confirmation failed to load"));
+    script.src = `${sheetWebAppUrl}?id=${encodeURIComponent(id)}&callback=${callback}`;
+    document.head.append(script);
+  });
+}
+
+function saveToFirestore(rsvp, id) {
+  if (!db) return Promise.reject(new Error("Firebase has not been configured"));
+  return db.setDoc(db.doc(db.collection(db.firestore, "rsvps"), id), {
+    ...rsvp, createdAt: db.serverTimestamp()
+  });
+}
+
 function updateAttendanceFields() {
   const attending = form.elements.attendance.value === "attending";
   guestCountField.hidden = !attending;
@@ -133,13 +173,19 @@ form.addEventListener("submit", async (event) => {
   };
   const submit = form.querySelector("button[type=submit]");
   submit.disabled = true; setStatus("Sending your RSVP…");
-  try {
-    if (!db) throw new Error("Firebase has not been configured");
-    await db.addDoc(db.collection(db.firestore, "rsvps"), { ...rsvp, createdAt: db.serverTimestamp() });
+  const id = crypto.randomUUID();
+  const [firebaseResult, sheetResult] = await Promise.allSettled([
+    saveToFirestore(rsvp, id), saveToSheet(rsvp, id)
+  ]);
+  if (firebaseResult.status === "fulfilled" || sheetResult.status === "fulfilled") {
+    if (firebaseResult.status === "rejected") console.warn("Firestore RSVP backup failed", firebaseResult.reason);
+    if (sheetResult.status === "rejected") console.warn("Google Sheets RSVP backup failed", sheetResult.reason);
     form.reset(); updateAttendanceFields(); setStatus("Thank you — your RSVP is on its way!", "success");
-  } catch (error) {
+  } else {
+    console.error("Both RSVP destinations failed", firebaseResult.reason, sheetResult.reason);
     setStatus("We couldn’t save your RSVP. Please check your connection and try again.", "error");
-  } finally { submit.disabled = false; }
+  }
+  submit.disabled = false;
 });
 
 document.querySelector(".menu-button").addEventListener("click", (event) => {

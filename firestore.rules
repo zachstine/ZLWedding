@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  function validRsvp() {
+    let data = request.resource.data;
+    let attending = data.attendance == 'attending';
+    return data.keys().hasAll([
+        'name', 'email', 'attendance', 'guestCount', 'dietaryNeeds',
+        'rehearsalDinner', 'stayingAfterReceptionDinner', 'drinkingAlcohol',
+        'message', 'createdAt'
+      ])
+      && data.keys().hasOnly([
+        'name', 'email', 'attendance', 'guestCount', 'dietaryNeeds',
+        'rehearsalDinner', 'stayingAfterReceptionDinner', 'drinkingAlcohol',
+        'message', 'createdAt'
+      ])
+      && data.name is string && data.name.size() > 0 && data.name.size() <= 100
+      && data.email is string && data.email.size() > 3 && data.email.size() <= 254
+      && data.attendance in ['attending', 'declined']
+      && data.guestCount is int
+      && (attending ? data.guestCount >= 1 && data.guestCount <= 4 : data.guestCount == 0)
+      && data.dietaryNeeds is string && data.dietaryNeeds.size() <= 500
+      && (!attending ? data.dietaryNeeds == '' : true)
+      && data.message is string && data.message.size() <= 750
+      && (attending
+        ? data.rehearsalDinner in ['yes', 'no']
+          && data.stayingAfterReceptionDinner in ['yes', 'no']
+          && data.drinkingAlcohol in ['yes', 'no']
+        : data.rehearsalDinner == null
+          && data.stayingAfterReceptionDinner == null
+          && data.drinkingAlcohol == null)
+      && data.createdAt == request.time;
+  }
+
+  match /databases/{database}/documents {
+    match /rsvps/{rsvpId} {
+      allow create: if validRsvp();
+      allow read, update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
