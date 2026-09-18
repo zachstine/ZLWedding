@@ -107,6 +107,10 @@ nav a {
   font-size: clamp(1rem, 2vw, 1.2rem);
 }
 
+.hero .button {
+  justify-self: center;
+}
+
 .button {
   display: inline-block;
   width: fit-content;
