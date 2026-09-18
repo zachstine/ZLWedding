@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#8e5d5a" />
+    <title>Alex & Jamie — Wedding</title>
+    <meta name="description" content="Celebrate the wedding of Alex and Jamie." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha512-p4NxAoJBhIINfQ6i8p5tD8CZF+WO1aJbMgH0Ym+fTn5U64n2ki5e9N8s5Yb5oWK06T9Y4cV4lfBsiuH0qB91FQ==" crossorigin="" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top">A <span>&</span> J</a>
+      <button class="menu-button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" aria-label="Main navigation">
+        <a href="#details">Details</a>
+        <a href="#travel">Travel</a>
+        <a href="#rsvp">RSVP</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow">We’re getting married</p>
+        <h1 id="hero-title">Alex <span>&</span> Jamie</h1>
+        <p class="hero-date">Saturday, September 12, 2026 · Hudson Valley, New York</p>
+        <a class="button button-light" href="#rsvp">RSVP</a>
+      </section>
+
+      <section id="details" class="section intro">
+        <p class="eyebrow">Save the date</p>
+        <h2>Join us for a joyful weekend</h2>
+        <p>We can’t wait to celebrate with our favorite people. The ceremony begins at 4:30 PM, followed by cocktails, dinner, and dancing.</p>
+        <div class="details-grid">
+          <article><h3>When</h3><p>Saturday, September 12<br />4:30 PM</p></article>
+          <article><h3>Where</h3><p>Willowbrook Estate<br />Hudson Valley, NY</p></article>
+          <article><h3>Dress</h3><p>Garden formal<br />Comfortable shoes encouraged</p></article>
+        </div>
+      </section>
+
+      <section id="travel" class="section map-section" aria-labelledby="travel-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">Getting there</p><h2 id="travel-title">Find your way</h2></div>
+          <a id="directions-link" class="text-link" href="https://www.google.com/maps/search/?api=1&query=Hudson+Valley+NY" target="_blank" rel="noreferrer">Open directions ↗</a>
+        </div>
+        <div id="map" role="application" aria-label="Map showing the wedding venue"></div>
+        <p class="map-note">Replace the venue address in <code>app.js</code> when your plans are final. The map and directions link update together.</p>
+      </section>
+
+      <section id="rsvp" class="section rsvp-section" aria-labelledby="rsvp-title">
+        <div class="rsvp-copy"><p class="eyebrow">Kindly reply by August 1</p><h2 id="rsvp-title">Will you be there?</h2><p>Your reply helps us plan a wonderful celebration. One form per household, please.</p></div>
+        <form id="rsvp-form" novalidate>
+          <fieldset>
+            <legend>Attendance</legend>
+            <div class="attendance-options">
+              <label class="choice"><input type="radio" name="attendance" value="attending" required /><span>Joyfully accepts</span></label>
+              <label class="choice"><input type="radio" name="attendance" value="declined" required /><span>Regretfully declines</span></label>
+            </div>
+          </fieldset>
+          <div class="form-grid">
+            <label>Full name<input name="name" autocomplete="name" required maxlength="100" /></label>
+            <label>Email<input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
+            <label id="guest-count-field">Guests attending<select name="guestCount"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
+            <label id="dietary-field">Dietary needs<textarea name="dietaryNeeds" rows="2" maxlength="500" placeholder="Optional"></textarea></label>
+          </div>
+          <label>Message for the couple<textarea name="message" rows="3" maxlength="750" placeholder="Optional"></textarea></label>
+          <button class="button" type="submit">Send RSVP</button>
+          <p id="form-status" class="form-status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+    <footer>Made with love · Alex & Jamie · 2026</footer>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha512-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBoY6fcS1dN7Gk1fB6WF7m1gKCB/9QSgD4/dyJ9nBkn4aQ==" crossorigin=""></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
