@@ -1,16 +1,15 @@
 import { firebaseConfig } from "./firebase-config.js";
 
 const venue = {
-  name: "Big Creek Lodge",
-  address: "Westfield, North Carolina",
-  // Replace with the exact venue latitude and longitude.
-  coordinates: [36.4709372, -80.4213111]
+  name: "The Big Creek Lodge",
+  address: "1068 Wilson Farm Rd, Westfield, NC 27053",
+  coordinates: [36.4754, -80.4467]
 };
 
 const directions = document.querySelector("#directions-link");
 directions.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${venue.name}, ${venue.address}`)}`;
 
-const map = L.map("map", { scrollWheelZoom: false }).setView(venue.coordinates, 11);
+const map = L.map("map", { scrollWheelZoom: false }).setView(venue.coordinates, 13);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap contributors" }).addTo(map);
 L.marker(venue.coordinates).addTo(map).bindPopup(`<strong>${venue.name}</strong><br>${venue.address}`).openPopup();
 
