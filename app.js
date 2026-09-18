@@ -94,6 +94,11 @@ async function connectFirebase() {
   ]);
   const app = initializeApp(firebaseConfig);
   db = { firestore: getFirestore(app), collection, addDoc, serverTimestamp };
+  import("https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js")
+    .then(async ({ getAnalytics, isSupported }) => {
+      if (await isSupported()) getAnalytics(app);
+    })
+    .catch(() => {});
 }
 
 connectFirebase().catch(() => setStatus("The RSVP service is temporarily unavailable. Please try again shortly.", "error"));

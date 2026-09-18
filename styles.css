@@ -239,10 +239,15 @@ legend {
 .choice {
   flex: 1;
   cursor: pointer;
+  position: relative;
 }
 
 .choice input {
   position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
   opacity: 0;
 }
 
@@ -258,6 +263,11 @@ legend {
   background: #f6eceb;
   color: var(--rose-dark);
   font-weight: 700;
+}
+
+.choice input:focus-visible + span {
+  outline: 2px solid var(--rose);
+  outline-offset: 2px;
 }
 
 .form-grid {
