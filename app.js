@@ -1,10 +1,10 @@
 import { firebaseConfig } from "./firebase-config.js";
 
 const venue = {
-  name: "Willowbrook Estate",
-  address: "Hudson Valley, New York",
+  name: "Big Creek Lodge",
+  address: "Westfield, North Carolina",
   // Replace with the exact venue latitude and longitude.
-  coordinates: [41.711, -73.921]
+  coordinates: [36.4709372, -80.4213111]
 };
 
 const directions = document.querySelector("#directions-link");
