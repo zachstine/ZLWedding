@@ -1,5 +1,6 @@
 import { firebaseConfig } from "./firebase-config.js";
 import { sheetWebAppUrl } from "./sheet-config.js";
+import { emailConfirmationConfigured, sendRsvpConfirmation } from "./emailjs.mjs";
 
 const venue = {
   name: "The Big Creek Lodge",
@@ -180,7 +181,21 @@ form.addEventListener("submit", async (event) => {
   if (firebaseResult.status === "fulfilled" || sheetResult.status === "fulfilled") {
     if (firebaseResult.status === "rejected") console.warn("Firestore RSVP backup failed", firebaseResult.reason);
     if (sheetResult.status === "rejected") console.warn("Google Sheets RSVP backup failed", sheetResult.reason);
-    form.reset(); updateAttendanceFields(); setStatus("Thank you — your RSVP via Resend is on its way! CHECK YOUR SPAM!", "success");
+    let confirmationSent = false;
+    if (emailConfirmationConfigured()) {
+      try {
+        await sendRsvpConfirmation(rsvp);
+        confirmationSent = true;
+      } catch (error) {
+        console.warn("RSVP confirmation email failed", error);
+      }
+    }
+    form.reset(); updateAttendanceFields();
+    setStatus(confirmationSent
+      ? "Thank you — your RSVP was saved. Check your email for a copy of your answers. Check your spam folder too."
+      : emailConfirmationConfigured()
+        ? "Thank you — your RSVP was saved, but we could not send a confirmation email."
+        : "Thank you — your RSVP has been saved!", "success");
   } else {
     console.error("Both RSVP destinations failed", firebaseResult.reason, sheetResult.reason);
     setStatus("We couldn’t save your RSVP. Please check your connection and try again.", "error");
