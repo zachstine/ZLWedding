@@ -4,17 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#8e5d5a" />
-    <title>Zach & Lauren</title>
-    <meta name="description" content="Celebrate the wedding of Zach and Lauren." />
+    <title>Alex & Jamie — Wedding</title>
+    <meta name="description" content="Celebrate the wedding of Alex and Jamie." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha512-p4NxAoJBhIINfQ6i8p5tD8CZF+WO1aJbMgH0Ym+fTn5U64n2ki5e9N8s5Yb5oWK06T9Y4cV4lfBsiuH0qB91FQ==" crossorigin="" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="#top">Z <span>&</span> L</a>
+      <a class="brand" href="#top">A <span>&</span> J</a>
       <button class="menu-button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" aria-label="Main navigation">
         <a href="#details">Details</a>
@@ -26,29 +25,29 @@
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <p class="eyebrow">We’re getting married</p>
-        <h1 id="hero-title">Zach <span>&</span> Lauren</h1>
-        <p class="hero-date">Saturday, July 10, 2027 · Big Creek Lodge, Westfield, North Carolina</p>
+        <h1 id="hero-title">Alex <span>&</span> Jamie</h1>
+        <p class="hero-date">Saturday, September 12, 2026 · Westfield, North Carolina</p>
         <a class="button button-light" href="#rsvp">RSVP</a>
       </section>
 
       <section id="details" class="section intro">
         <p class="eyebrow">Save the date</p>
         <h2>Join us for a joyful weekend</h2>
-        <p>We can’t wait to celebrate with our favorite people. The ceremony begins at 4:00 PM, followed by cocktails, dinner, and dancing.</p>
+        <p>We can’t wait to celebrate with our favorite people. The ceremony begins at 4:30 PM, followed by cocktails, dinner, and dancing.</p>
         <div class="details-grid">
-          <article><h3>When</h3><p>Saturday, July 10, 2027<br />4:00 PM</p></article>
-          <article><h3>Where</h3><p>The Big Creek Lodge<br />Westfield, NC</p></article>
-          <article><h3>Dress</h3><p>Formal<br /></p></article>
+          <article><h3>When</h3><p>Saturday, September 12<br />4:30 PM</p></article>
+          <article><h3>Where</h3><p>The Big Creek Lodge<br />1068 Wilson Farm Rd<br />Westfield, NC 27053</p></article>
+          <article><h3>Dress</h3><p>Garden formal<br />Comfortable shoes encouraged</p></article>
         </div>
       </section>
 
       <section id="travel" class="section map-section" aria-labelledby="travel-title">
         <div class="section-heading">
           <div><p class="eyebrow">Getting there</p><h2 id="travel-title">Find your way</h2></div>
-          <a id="directions-link" class="text-link" href="https://www.google.com/maps/place/The+Big+Creek+Lodge/@36.4709372,-80.4213111,1345m/data=!3m1!1e3!4m10!1m2!2m1!1sbig+creek+lodge!3m6!1s0x88524748e8a9af37:0xbfd74649cfa57e3a!8m2!3d36.4702491!4d-80.4195327!15sCg9iaWcgY3JlZWsgbG9kZ2VaESIPYmlnIGNyZWVrIGxvZGdlkgELZXZlbnRfdmVudWWaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVUkVjM0JMV1ZSbkVBReABAPoBBAg_EEo!16s%2Fg%2F11h5n7jqtr?entry=ttu&g_ep=EgoyMDI2MDkxNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noreferrer">Open directions ↗</a>
+          <a id="directions-link" class="text-link" href="https://www.google.com/maps/search/?api=1&query=1068+Wilson+Farm+Rd%2C+Westfield%2C+NC+27053" target="_blank" rel="noreferrer">Open directions ↗</a>
         </div>
-        <div id="map" role="application" aria-label="Map showing the wedding venue"></div>
-        <p class="map-note">Replace the venue address in <code>app.js</code> when your plans are final. The map and directions link update together.</p>
+        <iframe id="map" title="Map showing The Big Creek Lodge" src="https://www.google.com/maps?q=1068%20Wilson%20Farm%20Rd%2C%20Westfield%2C%20NC%2027053&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <p class="map-note">The Big Creek Lodge · 1068 Wilson Farm Rd, Westfield, NC 27053</p>
       </section>
 
       <section id="rsvp" class="section rsvp-section" aria-labelledby="rsvp-title">
@@ -73,8 +72,7 @@
         </form>
       </section>
     </main>
-    <footer>Made with love · Zach & Lauren · 2026</footer>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha512-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBoY6fcS1dN7Gk1fB6WF7m1gKCB/9QSgD4/dyJ9nBkn4aQ==" crossorigin=""></script>
+    <footer>Made with love · Alex & Jamie · 2026</footer>
     <script type="module" src="app.js"></script>
   </body>
 </html>
