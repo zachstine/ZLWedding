@@ -7,7 +7,77 @@ const venue = {
 
 const directions = document.querySelector("#directions-link");
 directions.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${venue.name}, ${venue.address}`)}`;
-document.querySelector("#map").src = `https://www.google.com/maps?q=${encodeURIComponent(`${venue.name}, ${venue.address}`)}&output=embed`;
+
+// Change a location's x/y values to move its marker across the aerial image.
+// x is the distance from the left edge; y is the distance from the top edge.
+const propertyLocations = [
+  { id: "big-creek-lodge", name: "Big Creek Lodge", x: 19, y: 40, type: "events-lodging", details: ["Rehearsal", "Ceremony", "Reception", "9 Rooms"] },
+  { id: "green-cabin", name: "Green Cabin", x: 35, y: 22, type: "lodging", details: ["Sleeps 6"] },
+  { id: "farmhouse", name: "The Farmhouse", x: 46, y: 55, type: "lodging", details: ["Sleeps 16"] },
+  { id: "chicken-coop", name: "The Chicken Coop", x: 57, y: 90, type: "lodging", details: ["5 Rooms"] }
+];
+
+const propertyMap = document.querySelector("#property-map");
+const markersContainer = document.querySelector("#property-markers");
+const propertyCard = document.querySelector("#property-card");
+let selectedMarker = null;
+
+function closePropertyCard({ returnFocus = false } = {}) {
+  propertyCard.hidden = true;
+  if (selectedMarker) {
+    selectedMarker.classList.remove("is-selected");
+    selectedMarker.setAttribute("aria-pressed", "false");
+  }
+  if (returnFocus && selectedMarker) selectedMarker.focus();
+  selectedMarker = null;
+}
+
+function showPropertyCard(location, marker) {
+  if (selectedMarker === marker) {
+    closePropertyCard();
+    return;
+  }
+  if (selectedMarker) {
+    selectedMarker.classList.remove("is-selected");
+    selectedMarker.setAttribute("aria-pressed", "false");
+  }
+  selectedMarker = marker;
+  marker.classList.add("is-selected");
+  propertyCard.style.setProperty("--card-x", `${location.x}%`);
+  propertyCard.style.setProperty("--card-y", `${location.y}%`);
+  propertyCard.innerHTML = `
+    <button class="property-card__close" type="button" aria-label="Close ${location.name} details">×</button>
+    <h3>${location.name}</h3>
+    <ul>${location.details.map(detail => `<li>${detail}</li>`).join("")}</ul>
+  `;
+  propertyCard.hidden = false;
+  propertyCard.querySelector(".property-card__close").addEventListener("click", () => closePropertyCard({ returnFocus: true }));
+}
+
+propertyLocations.forEach((location) => {
+  const marker = document.createElement("button");
+  marker.type = "button";
+  marker.className = "property-marker";
+  marker.dataset.locationId = location.id;
+  marker.style.left = `${location.x}%`;
+  marker.style.top = `${location.y}%`;
+  marker.setAttribute("aria-label", `View details for ${location.name}`);
+  marker.setAttribute("aria-pressed", "false");
+  marker.innerHTML = `<svg class="property-marker__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5v-9Zm6 9h6v-6H9v6Z"/></svg><span class="property-marker__tooltip">${location.name}</span>`;
+  marker.addEventListener("click", (event) => {
+    event.stopPropagation();
+    showPropertyCard(location, marker);
+    marker.setAttribute("aria-pressed", String(selectedMarker === marker));
+  });
+  markersContainer.append(marker);
+});
+
+propertyMap.addEventListener("click", (event) => {
+  if (event.target === propertyMap || event.target.classList.contains("property-map__image")) closePropertyCard();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !propertyCard.hidden) closePropertyCard({ returnFocus: true });
+});
 
 const form = document.querySelector("#rsvp-form");
 const status = document.querySelector("#form-status");

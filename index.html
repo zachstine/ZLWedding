@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#8e5d5a" />
-    <title>Alex & Jamie — Wedding</title>
-    <meta name="description" content="Celebrate the wedding of Alex and Jamie." />
+    <title>Zach & Lauren — Wedding</title>
+    <meta name="description" content="Celebrate the wedding of Zach and Lauren." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -13,7 +13,7 @@
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="#top">A <span>&</span> J</a>
+      <a class="brand" href="#top">Z <span>&</span> L</a>
       <button class="menu-button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" aria-label="Main navigation">
         <a href="#details">Details</a>
@@ -25,7 +25,7 @@
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <p class="eyebrow">We’re getting married</p>
-        <h1 id="hero-title">Alex <span>&</span> Jamie</h1>
+        <h1 id="hero-title">Zach <span>&</span> Lauren</h1>
         <p class="hero-date">Saturday, September 12, 2026 · Westfield, North Carolina</p>
         <a class="button button-light" href="#rsvp">RSVP</a>
       </section>
@@ -43,10 +43,14 @@
 
       <section id="travel" class="section map-section" aria-labelledby="travel-title">
         <div class="section-heading">
-          <div><p class="eyebrow">Getting there</p><h2 id="travel-title">Find your way</h2></div>
-          <a id="directions-link" class="text-link" href="https://www.google.com/maps/search/?api=1&query=1068+Wilson+Farm+Rd%2C+Westfield%2C+NC+27053" target="_blank" rel="noreferrer">Open directions ↗</a>
+          <div><p class="eyebrow">The Big Creek Lodge</p><h2 id="travel-title">Explore the Property</h2><p class="section-subtitle">Tap a location to learn more</p></div>
+          <a id="directions-link" class="text-link" href="https://www.google.com/maps/search/?api=1&query=1068+Wilson+Farm+Rd%2C+Westfield%2C+NC+27053" target="_blank" rel="noreferrer">Open in Google Maps ↗</a>
         </div>
-        <iframe id="map" title="Map showing The Big Creek Lodge" src="https://www.google.com/maps?q=1068%20Wilson%20Farm%20Rd%2C%20Westfield%2C%20NC%2027053&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div id="property-map" class="property-map" aria-label="Interactive guide to The Big Creek Lodge property">
+          <img class="property-map__image" src="assets/big-creek-property-map.png" alt="Aerial map of The Big Creek Lodge property" />
+          <div id="property-markers" class="property-map__markers"></div>
+          <article id="property-card" class="property-card" hidden aria-live="polite"></article>
+        </div>
         <p class="map-note">The Big Creek Lodge · 1068 Wilson Farm Rd, Westfield, NC 27053</p>
       </section>
 
@@ -72,7 +76,7 @@
         </form>
       </section>
     </main>
-    <footer>Made with love · Alex & Jamie · 2026</footer>
+    <footer>Made with love · Zach & Lauren · 2026</footer>
     <script type="module" src="app.js"></script>
   </body>
 </html>
