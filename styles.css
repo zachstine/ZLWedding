@@ -495,7 +495,7 @@ footer {
 
 @media (max-width: 700px) {
   .property-map__image { border-radius: 3px 3px 0 0; }
-  .property-map__markers { bottom: auto; aspect-ratio: 1002 / 1107; }
+  .property-map__markers { bottom: auto; aspect-ratio: 1012 / 1080; }
   .property-card {
     position: relative;
     left: auto;
